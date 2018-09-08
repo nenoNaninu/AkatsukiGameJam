@@ -9,14 +9,16 @@ namespace Neno.Scripts
     {
         List<GameObject> enemyList = new List<GameObject>();
         List<GameObject> lineList = new List<GameObject>();
-        [SerializeField]private float distance = 100f;
-        private LineRenderer enemy2coursorLine;
+        [SerializeField] private float distance = 100f;
+        private LineRenderer enemy2CoursorLine;
 
+        private bool explosionFlag = false;
 
         void Start()
         {
             GameObject tmp = new GameObject();
-            enemy2coursorLine = tmp.AddComponent<LineRenderer>();
+            enemy2CoursorLine = tmp.AddComponent<LineRenderer>();
+            enemy2CoursorLine.material = new Material(Shader.Find("Sprites/Default"));
             tmp.SetActive(false);
         }
 
@@ -29,7 +31,7 @@ namespace Neno.Scripts
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 // Rayの当たったオブジェクトの情報を格納する
                 RaycastHit hit = new RaycastHit();
-                if (Physics.Raycast(ray, out hit, distance,1 << 8))
+                if (Physics.Raycast(ray, out hit, distance, 1 << 8))
                 {
                     enemyList.Add(hit.collider.gameObject);
                     CreateEnemyCombineLine();
@@ -38,7 +40,9 @@ namespace Neno.Scripts
 
             if (Input.GetMouseButtonDown(1))
             {
-                ExplodeEnemy();
+                //RemoveEnemyMoment();
+                explosionFlag = true;
+                StartCoroutine(ExplodeEnemyCombine());
             }
 
             DrawEnemyCombineLine();
@@ -48,29 +52,35 @@ namespace Neno.Scripts
 
         void DrawEnemy2Coursor()
         {
+            if (explosionFlag)
+            {
+                return;
+            }
+
             if (enemyList != null)
             {
                 if (enemyList.Count >= 1)
                 {
-                    this.enemy2coursorLine.gameObject.SetActive(true);
+                    this.enemy2CoursorLine.gameObject.SetActive(true);
                     Vector3 enemyPos = this.enemyList[enemyList.Count - 1].transform.position;
                     Vector3 playerPos = gameObject.transform.position;
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     float player2EnemyDistance = (enemyPos - playerPos).magnitude;
+                    enemy2CoursorLine.positionCount = 2;
                     Debug.Log(player2EnemyDistance);
-                    enemy2coursorLine.positionCount = 2;
-                    enemy2coursorLine.startWidth = 0.1f;
-                    enemy2coursorLine.endWidth = 0.1f;
-                    enemy2coursorLine.startColor = Color.blue;
-                    enemy2coursorLine.endColor = Color.cyan;
-                    enemy2coursorLine.SetPosition(0, enemyPos);
-                    enemy2coursorLine.SetPosition(1, ray.direction*player2EnemyDistance + ray.origin);
+                    enemy2CoursorLine.positionCount = 2;
+                    enemy2CoursorLine.startWidth = 0.1f;
+                    enemy2CoursorLine.endWidth = 0.1f;
+                    enemy2CoursorLine.startColor = Color.blue;
+                    enemy2CoursorLine.endColor = Color.cyan;
+                    enemy2CoursorLine.SetPosition(0, enemyPos);
+                    enemy2CoursorLine.SetPosition(1, ray.direction * player2EnemyDistance + ray.origin);
                 }
             }
         }
 
-        void ExplodeEnemy()
+        void RemoveEnemyMoment()
         {
             if (enemyList != null)
             {
@@ -87,7 +97,7 @@ namespace Neno.Scripts
                     Destroy(lineObj);
                 }
             }
-            enemy2coursorLine.gameObject.SetActive(false);
+            enemy2CoursorLine.gameObject.SetActive(false);
 
             if (enemyList != null) enemyList.Clear();
             if (lineList != null) lineList.Clear();
@@ -101,6 +111,10 @@ namespace Neno.Scripts
             {
                 for (int i = 0; i < lineList.Count; i++)
                 {
+                    if (enemyList.Count <= i + 1)
+                    {
+                        return;
+                    }
                     Vector3 startVec = enemyList[i].transform.position;
                     Vector3 endVec = enemyList[i + 1].transform.position;
                     LineRenderer lineRenderer = lineList[i].GetComponent<LineRenderer>();
@@ -124,6 +138,8 @@ namespace Neno.Scripts
                 {
                     GameObject line = new GameObject("Line");
                     LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
+                    lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+
                     lineList.Add(line);
                     Vector3 startVec = enemyList[enemyList.Count - 2].transform.position;
                     Vector3 endVec = enemyList[enemyList.Count - 1].transform.position;
@@ -137,6 +153,58 @@ namespace Neno.Scripts
                 }
             }
         }
+
+        IEnumerator ExplodeEnemyCombine()
+        {
+
+            if (enemyList == null)
+            {
+                yield break;
+            }
+
+            if (enemyList.Count > 0)
+            {
+                enemy2CoursorLine.gameObject.SetActive(false);
+            }
+
+            for (int enemyIndex = enemyList.Count - 1; 0 <= enemyIndex; enemyIndex--)
+            {
+                IEnemy enemy = enemyList[enemyIndex].GetComponent<IEnemy>();
+                enemyList.Remove(enemyList[enemyIndex]);
+                enemy.Explode();
+
+                //ラインを徐々に消す処理
+                //yield return new WaitForSeconds(0.5f);
+                if (1 <= lineList.Count)
+                {
+                    GameObject lineObj = lineList[lineList.Count - 1];
+                    lineList.Remove(lineObj);
+
+                    float ignittionTime = 0.5f;
+                    Vector3[] linePosition = new Vector3[2];
+                    LineRenderer ignittionLine = lineObj.GetComponent<LineRenderer>();
+                    
+                    ignittionLine.GetPositions(linePosition);
+
+                    Vector3 startPoint = linePosition[0];
+                    Vector3 endPoint = linePosition[1];
+                    float timeStamp = Time.time;
+                        
+                    while (ignittionTime >=0)
+                    {
+                        ignittionTime -= Time.deltaTime;
+                        Vector3 endPos = Vector3.Lerp(endPoint, startPoint,(Time.time - timeStamp) / 0.5f);
+                        ignittionLine.SetPosition(1,endPos);
+                        yield return null;
+                    }
+                    Destroy(lineObj);
+
+                    yield return null;
+                }
+            }
+            explosionFlag = false;
+        }
+
     }
 }
 
