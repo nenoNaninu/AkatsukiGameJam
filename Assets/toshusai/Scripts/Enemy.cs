@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Neno.Scripts;
 
 public enum EnemyType{
-    Test,
-    Test2,
+    Blue,
+    Green,
+    Orange,
+    Purple,
+    Red
 }
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour,IEnemy
 {
-    public EnemyType type = EnemyType.Test;
+    public EnemyType type = EnemyType.Red;
+
+    public EnemyType EnemyType
+    {
+        get { return type; }
+        set { type = value; }
+    }
 
     [SerializeField]
     public GameObject popParticlePrefab;
@@ -18,9 +28,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private AudioSource selectedVoice;
 
-    private void Start()
-    {
+    private bool Connected = false;
 
+    public bool Combined
+    {
+        get { return Connected; }
+        set { Connected = value; }
     }
 
     public void Init(EnemyType type)
@@ -46,5 +59,10 @@ public class Enemy : MonoBehaviour
             particle.transform.localPosition = transform.position;
             Destroy(this.gameObject);
         });
+    }
+
+    public void Explode()
+    {
+        Pop();
     }
 }

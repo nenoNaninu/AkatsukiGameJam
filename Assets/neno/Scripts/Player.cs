@@ -22,6 +22,7 @@ namespace Neno.Scripts
             tmp.SetActive(false);
         }
 
+
         // Update is called once per frame
         void Update()
         {
@@ -30,24 +31,43 @@ namespace Neno.Scripts
                 // クリックしたスクリーン座標をrayに変換
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 // Rayの当たったオブジェクトの情報を格納する
-                RaycastHit hit = new RaycastHit();
-                if (Physics.Raycast(ray, out hit, distance, 1 << 8))
-                {
-                    enemyList.Add(hit.collider.gameObject);
-                    CreateEnemyCombineLine();
-                }
+                CombineRequest(ray);
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                //RemoveEnemyMoment();
-                explosionFlag = true;
-                StartCoroutine(ExplodeEnemyCombine());
+                ExplodeRequest();
             }
 
             DrawEnemyCombineLine();
             DrawEnemy2Coursor();
 
+        }
+        void CombineRequest(Ray ray)
+        {
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit, distance, 1 << 8))
+            {
+                IEnemy enemy = hit.collider.GetComponent<IEnemy>();
+                if (enemy != null && !enemy.Combined)
+                {
+                    enemy.Combined = true;
+                    enemyList.Add(hit.collider.gameObject);
+                    CreateEnemyCombineLine();
+                }
+            }
+        }
+
+        void ExplodeRequest()
+        {
+            explosionFlag = true;
+            GameObject expLinker = new GameObject();
+            Exploder exploder = expLinker.AddComponent<Exploder>();
+            exploder.Explode(this.enemyList, this.lineList);
+            this.enemyList = new List<GameObject>();
+            this.lineList = new List<GameObject>();
+            this.enemy2CoursorLine.gameObject.SetActive(false);
+            explosionFlag = false;
         }
 
         void DrawEnemy2Coursor()
@@ -67,15 +87,7 @@ namespace Neno.Scripts
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     float player2EnemyDistance = (enemyPos - playerPos).magnitude;
-                    enemy2CoursorLine.positionCount = 2;
-                    Debug.Log(player2EnemyDistance);
-                    enemy2CoursorLine.positionCount = 2;
-                    enemy2CoursorLine.startWidth = 0.1f;
-                    enemy2CoursorLine.endWidth = 0.1f;
-                    enemy2CoursorLine.startColor = Color.blue;
-                    enemy2CoursorLine.endColor = Color.cyan;
-                    enemy2CoursorLine.SetPosition(0, enemyPos);
-                    enemy2CoursorLine.SetPosition(1, ray.direction * player2EnemyDistance + ray.origin);
+                    DrawLine(enemy2CoursorLine, enemyPos, ray.direction * player2EnemyDistance + ray.origin);
                 }
             }
         }
@@ -115,16 +127,11 @@ namespace Neno.Scripts
                     {
                         return;
                     }
+
                     Vector3 startVec = enemyList[i].transform.position;
                     Vector3 endVec = enemyList[i + 1].transform.position;
                     LineRenderer lineRenderer = lineList[i].GetComponent<LineRenderer>();
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
-                    lineRenderer.startColor = Color.blue;
-                    lineRenderer.endColor = Color.cyan;
-                    lineRenderer.SetPosition(0, startVec);
-                    lineRenderer.SetPosition(1, endVec);
+                    DrawLine(lineRenderer,startVec, endVec);
                 }
             }
         }
@@ -143,68 +150,21 @@ namespace Neno.Scripts
                     lineList.Add(line);
                     Vector3 startVec = enemyList[enemyList.Count - 2].transform.position;
                     Vector3 endVec = enemyList[enemyList.Count - 1].transform.position;
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
-                    lineRenderer.startColor = Color.blue;
-                    lineRenderer.endColor = Color.cyan;
-                    lineRenderer.SetPosition(0, startVec);
-                    lineRenderer.SetPosition(1, endVec);
+                    DrawLine(lineRenderer, startVec, endVec);
                 }
             }
         }
 
-        IEnumerator ExplodeEnemyCombine()
+        void DrawLine(LineRenderer lineRenderer, Vector3 start, Vector3 end)
         {
-
-            if (enemyList == null)
-            {
-                yield break;
-            }
-
-            if (enemyList.Count > 0)
-            {
-                enemy2CoursorLine.gameObject.SetActive(false);
-            }
-
-            for (int enemyIndex = enemyList.Count - 1; 0 <= enemyIndex; enemyIndex--)
-            {
-                IEnemy enemy = enemyList[enemyIndex].GetComponent<IEnemy>();
-                enemyList.Remove(enemyList[enemyIndex]);
-                enemy.Explode();
-
-                //ラインを徐々に消す処理
-                //yield return new WaitForSeconds(0.5f);
-                if (1 <= lineList.Count)
-                {
-                    GameObject lineObj = lineList[lineList.Count - 1];
-                    lineList.Remove(lineObj);
-
-                    float ignittionTime = 0.5f;
-                    Vector3[] linePosition = new Vector3[2];
-                    LineRenderer ignittionLine = lineObj.GetComponent<LineRenderer>();
-                    
-                    ignittionLine.GetPositions(linePosition);
-
-                    Vector3 startPoint = linePosition[0];
-                    Vector3 endPoint = linePosition[1];
-                    float timeStamp = Time.time;
-                        
-                    while (ignittionTime >=0)
-                    {
-                        ignittionTime -= Time.deltaTime;
-                        Vector3 endPos = Vector3.Lerp(endPoint, startPoint,(Time.time - timeStamp) / 0.5f);
-                        ignittionLine.SetPosition(1,endPos);
-                        yield return null;
-                    }
-                    Destroy(lineObj);
-
-                    yield return null;
-                }
-            }
-            explosionFlag = false;
+            lineRenderer.positionCount = 2;
+            lineRenderer.startWidth = 0.1f;
+            lineRenderer.endWidth = 0.1f;
+            lineRenderer.startColor = Color.blue;
+            lineRenderer.endColor = Color.cyan;
+            lineRenderer.SetPosition(0, start);
+            lineRenderer.SetPosition(1, end);
         }
-
     }
 }
 
