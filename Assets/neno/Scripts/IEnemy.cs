@@ -10,6 +10,12 @@ namespace Neno.Scripts
     {
         void Explode();
 
-        int Id { get; set; }
+        //すでにつながっているかどうか
+        bool Combined { get; set; }
+
+        EnemyType EnemyType { get; set; }
+
+        //繋がった時の処理
+        void OnLink();
     }
 }

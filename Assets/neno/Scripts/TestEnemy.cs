@@ -3,17 +3,52 @@ using System.Collections.Generic;
 using Neno.Scripts;
 using UnityEngine;
 
-public class TestEnemy : MonoBehaviour,IEnemy
+namespace Neno.Scripts
 {
-    private int id = 0;
-    int IEnemy.Id
+    public class TestEnemy : MonoBehaviour, IEnemy
     {
-        get { return id; }
-        set { id = value; }
-    }
+        private int id = 0;
 
-    void IEnemy.Explode()
-    {
-        Destroy(gameObject);
+        void IEnemy.OnLink()
+        {
+
+        }
+
+        public bool Combined
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public EnemyType EnemyType
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        void IEnemy.Explode()
+        {
+            Destroy(gameObject);
+        }
+
+        void Update()
+        {
+            gameObject.transform.position += new Vector3(0,0,0.01f);
+        }
     }
 }
+
