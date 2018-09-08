@@ -22,6 +22,7 @@ namespace Neno.Scripts
             tmp.SetActive(false);
         }
 
+
         // Update is called once per frame
         void Update()
         {
@@ -30,30 +31,43 @@ namespace Neno.Scripts
                 // クリックしたスクリーン座標をrayに変換
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 // Rayの当たったオブジェクトの情報を格納する
-                RaycastHit hit = new RaycastHit();
-                if (Physics.Raycast(ray, out hit, distance, 1 << 8))
-                {
-                    enemyList.Add(hit.collider.gameObject);
-                    CreateEnemyCombineLine();
-                }
+                CombineRequest(ray);
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                //RemoveEnemyMoment();
-                explosionFlag = true;
-                GameObject expLinker = new GameObject();
-                Exploder exploder = expLinker.AddComponent<Exploder>();
-                exploder.Explode(this.enemyList, this.lineList);
-                this.enemyList = new List<GameObject>();
-                this.lineList = new List<GameObject>();
-                this.enemy2CoursorLine.gameObject.SetActive(false);
-                explosionFlag = false;
+                ExplodeRequest();
             }
 
             DrawEnemyCombineLine();
             DrawEnemy2Coursor();
 
+        }
+        void CombineRequest(Ray ray)
+        {
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit, distance, 1 << 8))
+            {
+                IEnemy enemy = hit.collider.GetComponent<IEnemy>();
+                if (enemy != null && !enemy.Combined)
+                {
+                    enemy.Combined = true;
+                    enemyList.Add(hit.collider.gameObject);
+                    CreateEnemyCombineLine();
+                }
+            }
+        }
+
+        void ExplodeRequest()
+        {
+            explosionFlag = true;
+            GameObject expLinker = new GameObject();
+            Exploder exploder = expLinker.AddComponent<Exploder>();
+            exploder.Explode(this.enemyList, this.lineList);
+            this.enemyList = new List<GameObject>();
+            this.lineList = new List<GameObject>();
+            this.enemy2CoursorLine.gameObject.SetActive(false);
+            explosionFlag = false;
         }
 
         void DrawEnemy2Coursor()
@@ -113,6 +127,7 @@ namespace Neno.Scripts
                     {
                         return;
                     }
+
                     Vector3 startVec = enemyList[i].transform.position;
                     Vector3 endVec = enemyList[i + 1].transform.position;
                     LineRenderer lineRenderer = lineList[i].GetComponent<LineRenderer>();
