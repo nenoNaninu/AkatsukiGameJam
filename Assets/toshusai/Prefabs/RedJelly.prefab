@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114270806764577060}
   - component: {fileID: 65211324621097392}
-  - component: {fileID: 54260889498120788}
   m_Layer: 8
   m_Name: RedJelly
   m_TagString: Untagged
@@ -176,7 +175,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1589219618097836}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54260889498120788
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

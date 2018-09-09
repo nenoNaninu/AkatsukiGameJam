@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114834794833189876}
   - component: {fileID: 65161379739073454}
-  - component: {fileID: 54442441090252192}
+
   m_Layer: 8
   m_Name: BlueJelly
   m_TagString: Untagged
@@ -176,7 +176,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1627602187655600}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54442441090252192
+
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
