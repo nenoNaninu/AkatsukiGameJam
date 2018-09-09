@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour, IEnemy
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Accelerating = false;
         transform.localScale = new Vector3(2, 2, 2);
+        transform.DOShakeScale(3f, 0.2f, 0, 10).SetLoops(-1);
         selectedMaker.SetActive(false);
     }
 
@@ -91,7 +92,8 @@ public class Enemy : MonoBehaviour, IEnemy
         {
             GameObject particle = Instantiate(popParticlePrefab);
             particle.transform.localPosition = transform.position;
-            Destroy(this.gameObject);
+            Destroy(particle, 0.5f);
+            Destroy(this.gameObject, 1f);
         });
     }
 
