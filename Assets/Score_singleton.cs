@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Score_singleton : MonoBehaviour {
 
+    public Text ScoreText;
     private static Score_singleton Score;
     private int num = 0;
 
@@ -34,6 +36,6 @@ public class Score_singleton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        ScoreText.text = "Score : " + this.num.ToString();
 	}
 }
