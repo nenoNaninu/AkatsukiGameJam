@@ -10,11 +10,11 @@ namespace Neno.Scripts
     {
         [SerializeField] private List<GameObject> enemyList;//5種類
 
-        [SerializeField] private float interval = 0.5f;
+        [SerializeField] private float interval = 3f;
 
         private Player player;
         private float timeStamp = 0;
-        private const int restrictionEnemyNum = 150;
+        private const int restrictionEnemyNum = 20;
         public static int CurrentEnemyNum { get; set; }
 
         // Use this for initialization
@@ -22,7 +22,7 @@ namespace Neno.Scripts
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             //最初に200体くらいポップさっせる
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Vector3 popPosition = CreatePosition();
 
@@ -30,7 +30,7 @@ namespace Neno.Scripts
                 IEnemy enemy = Instantiate(enemyList[enemyType], popPosition, Quaternion.LookRotation(player.transform.position - popPosition)).GetComponent<IEnemy>();
                 enemy.EnemyType = (EnemyType)Enum.ToObject(typeof(EnemyType), enemyType);
             }
-            CurrentEnemyNum = 100;
+            CurrentEnemyNum = 20;
         }
 
         // Update is called once per frame

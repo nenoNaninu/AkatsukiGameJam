@@ -14,6 +14,8 @@ namespace Neno.Scripts
 
         }
 
+        void IEnemy.OnUnLink(){}
+
         public bool Combined
         {
             get

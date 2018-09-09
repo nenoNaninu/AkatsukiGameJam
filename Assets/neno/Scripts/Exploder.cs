@@ -46,6 +46,7 @@ namespace Neno.Scripts
                     {
                         IEnemy enemy = item.GetComponent<IEnemy>();
                         enemy.Combined = false;
+                        enemy.OnUnLink();
                     }
 
                     foreach (var line in lineList)
