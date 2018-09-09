@@ -27,16 +27,28 @@ namespace Neno.Scripts
         // Update is called once per frame
         void Update()
         {
-            
-            if (Input.GetMouseButtonDown(0) || OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad))
+#if UNITY_EDITOR
+
+            if (Input.GetMouseButtonDown(0) )
             {
                 // クリックしたスクリーン座標をrayに変換
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 // Rayの当たったオブジェクトの情報を格納する
                 CombineRequest(ray);
             }
+            if (Input.GetMouseButtonDown(1))
+            {
+                ExplodeRequest();
+            }
 
-            if (Input.GetMouseButtonDown(1) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+#endif
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad))
+            {
+                Ray ray = new Ray(oculusgoController.position,oculusgoController.forward);
+                CombineRequest(ray);
+            }
+
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
                 ExplodeRequest();
             }
