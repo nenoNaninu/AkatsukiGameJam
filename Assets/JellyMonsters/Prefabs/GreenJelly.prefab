@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114674228839526912}
   - component: {fileID: 65779077612863974}
+  - component: {fileID: 54257390536113844}
   m_Layer: 8
   m_Name: GreenJelly
   m_TagString: Untagged

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114089667752575544}
   - component: {fileID: 65566904838274900}
+  - component: {fileID: 54724079476176598}
   m_Layer: 8
   m_Name: PurpleJelly
   m_TagString: Untagged

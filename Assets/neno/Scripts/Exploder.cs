@@ -9,6 +9,8 @@ namespace Neno.Scripts
         List<GameObject> enemyList = new List<GameObject>();
         List<GameObject> lineList = new List<GameObject>();
 
+        private EnemyType enemyType;
+
         void Update()
         {
             DrawEnemyCombineLine();
@@ -18,6 +20,7 @@ namespace Neno.Scripts
         {
             this.enemyList = enemyList;
             this.lineList = lineList;
+            enemyType = enemyList[enemyList.Count - 1].GetComponent<IEnemy>().EnemyType;
             StartCoroutine(ExplodeEnemyCombine());
         }
 
@@ -31,9 +34,32 @@ namespace Neno.Scripts
 
             for (int enemyIndex = enemyList.Count - 1; 0 <= enemyIndex; enemyIndex--)
             {
-                IEnemy enemy = enemyList[enemyIndex].GetComponent<IEnemy>();
+                IEnemy currentEnemy = enemyList[enemyIndex].GetComponent<IEnemy>();
+
+                if (currentEnemy.EnemyType != this.enemyType)
+                {
+                    //違うやつがつなげられてた
+                    Rigidbody mistakeEnemy = enemyList[enemyIndex].GetComponent<Rigidbody>();
+                    Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+                    mistakeEnemy.AddForce((player.transform.position - mistakeEnemy.transform.position).normalized * 50,ForceMode.Impulse);
+                    foreach (var item in enemyList)
+                    {
+                        IEnemy enemy = item.GetComponent<IEnemy>();
+                        enemy.Combined = false;
+                    }
+
+                    foreach (var line in lineList)
+                    {
+                        Destroy(line);
+                    }
+
+                    lineList.Clear();
+                    enemyList.Clear();
+                    yield break;
+                }
+
                 enemyList.Remove(enemyList[enemyIndex]);
-                enemy.Explode();
+                currentEnemy.Explode();
 
                 //ラインを徐々に消す処理
                 //yield return new WaitForSeconds(0.5f);
@@ -64,6 +90,7 @@ namespace Neno.Scripts
                     yield return null;
                 }
             }
+            Destroy(gameObject);
         }
 
         void DrawEnemyCombineLine()

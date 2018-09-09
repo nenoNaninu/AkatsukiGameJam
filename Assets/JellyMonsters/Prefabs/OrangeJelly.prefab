@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114596617634264044}
   - component: {fileID: 65060715398867546}
+  - component: {fileID: 54752784185124220}
   m_Layer: 8
   m_Name: OrangeJelly
   m_TagString: Untagged

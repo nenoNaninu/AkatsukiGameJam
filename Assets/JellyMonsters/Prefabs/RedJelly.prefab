@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114270806764577060}
   - component: {fileID: 65211324621097392}
+  - component: {fileID: 54699492395818948}
   m_Layer: 8
   m_Name: RedJelly
   m_TagString: Untagged
