@@ -14,6 +14,8 @@ namespace Neno.Scripts
 
         private Player player;
         private float timeStamp = 0;
+        private const int restrictionEnemyNum = 150;
+        public static int CurrentEnemyNum { get; set; }
 
         // Use this for initialization
         void Start()
@@ -28,6 +30,7 @@ namespace Neno.Scripts
                 IEnemy enemy = Instantiate(enemyList[enemyType], popPosition, Quaternion.LookRotation(player.transform.position - popPosition)).GetComponent<IEnemy>();
                 enemy.EnemyType = (EnemyType)Enum.ToObject(typeof(EnemyType), enemyType);
             }
+            CurrentEnemyNum = 100;
         }
 
         // Update is called once per frame
@@ -36,11 +39,15 @@ namespace Neno.Scripts
         {
             if (timeStamp + interval < Time.time)
             {
-                Vector3 popPosition = CreatePosition();
-                int enemyType = (int)Random.Range(0.0f, 5.0f);
+                if (CurrentEnemyNum < restrictionEnemyNum)
+                {
+                    Vector3 popPosition = CreatePosition();
+                    int enemyType = (int)Random.Range(0.0f, 5.0f);
 
-                IEnemy enemy = Instantiate(enemyList[enemyType], popPosition, Quaternion.LookRotation(player.transform.position - popPosition)).GetComponent<IEnemy>();
-                enemy.EnemyType = (EnemyType)Enum.ToObject(typeof(EnemyType), enemyType);
+                    IEnemy enemy = Instantiate(enemyList[enemyType], popPosition, Quaternion.LookRotation(player.transform.position - popPosition)).GetComponent<IEnemy>();
+                    enemy.EnemyType = (EnemyType)Enum.ToObject(typeof(EnemyType), enemyType);
+                    CurrentEnemyNum++;
+                }
             }
         }
 

@@ -8,6 +8,7 @@ namespace Neno.Scripts
 {
     interface IEnemy
     {
+        //爆発するときにはEnemiManagerのCurrentEnemyNumを減らすこと(えぇ…。
         void Explode();
 
         //すでにつながっているかどうか
