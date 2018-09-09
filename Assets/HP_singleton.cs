@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class HP_singleton : MonoBehaviour {
 
-    public Text HpText;
     private static HP_singleton Score;
     private int h_num = 0;
 
@@ -44,6 +43,6 @@ public class HP_singleton : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        HpText.text = "HP : " + this.h_num.ToString();
+      
     }
 }

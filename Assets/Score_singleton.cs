@@ -37,6 +37,6 @@ public class Score_singleton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        ScoreText.text = "Score : " + this.s_num.ToString();
+        
 	}
 }
