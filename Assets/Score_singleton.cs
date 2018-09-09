@@ -8,7 +8,7 @@ public class Score_singleton : MonoBehaviour {
 
     public Text ScoreText;
     private static Score_singleton Score;
-    private int num = 0;
+    private int s_num = 0;
 
     public static Score_singleton Instance{
         get{
@@ -22,11 +22,11 @@ public class Score_singleton : MonoBehaviour {
         }
     }
 
-    public void setScore(int n){
-        this.num = n;
+    public void setScore(int s){
+        this.s_num = s;
     }
     public int getScore(){
-        return this.num;
+        return this.s_num;
     }
 
 
@@ -37,6 +37,6 @@ public class Score_singleton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        ScoreText.text = "Score : " + this.num.ToString();
+        ScoreText.text = "Score : " + this.s_num.ToString();
 	}
 }
