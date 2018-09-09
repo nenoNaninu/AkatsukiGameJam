@@ -54,6 +54,7 @@ namespace Neno.Scripts
                     enemy.Combined = true;
                     enemyList.Add(hit.collider.gameObject);
                     CreateEnemyCombineLine();
+                    enemy.OnLink();
                 }
             }
         }

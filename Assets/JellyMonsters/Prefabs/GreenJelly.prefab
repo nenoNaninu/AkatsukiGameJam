@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: 9500000}
-  m_Layer: 0
+  - component: {fileID: 114674228839526912}
+  - component: {fileID: 65779077612863974}
+  m_Layer: 8
   m_Name: GreenJelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,3 +102,30 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
+--- !u!65 &65779077612863974
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.85322416, y: 0.8273647, z: 0.7381811}
+  m_Center: {x: -0.056951836, y: 0.0008122772, z: 0.05244024}
+--- !u!114 &114674228839526912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f92156eae734d3db296a7ba94f51cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
+    type: 2}
+  selectedVoice: {fileID: 0}
