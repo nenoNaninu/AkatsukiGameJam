@@ -93,6 +93,7 @@ public class Enemy : MonoBehaviour, IEnemy
             GameObject particle = Instantiate(popParticlePrefab);
             particle.transform.localPosition = transform.position;
             Destroy(particle, 0.5f);
+            transform.localScale = Vector3.zero;
             Destroy(this.gameObject, 1f);
         });
     }
