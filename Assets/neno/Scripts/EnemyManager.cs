@@ -46,6 +46,7 @@ namespace Neno.Scripts
 
                     IEnemy enemy = Instantiate(enemyList[enemyType], popPosition, Quaternion.LookRotation(player.transform.position - popPosition)).GetComponent<IEnemy>();
                     enemy.EnemyType = (EnemyType)Enum.ToObject(typeof(EnemyType), enemyType);
+                    CurrentEnemyNum++;
                 }
             }
         }
