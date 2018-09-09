@@ -9,16 +9,19 @@ namespace Neno.Scripts
     {
         List<GameObject> enemyList = new List<GameObject>();
         List<GameObject> lineList = new List<GameObject>();
-        [SerializeField]private float distance = 100f;
-        private LineRenderer enemy2coursorLine;
+        [SerializeField] private float distance = 100f;
+        private LineRenderer enemy2CoursorLine;
 
+        private bool explosionFlag = false;
 
         void Start()
         {
             GameObject tmp = new GameObject();
-            enemy2coursorLine = tmp.AddComponent<LineRenderer>();
+            enemy2CoursorLine = tmp.AddComponent<LineRenderer>();
+            enemy2CoursorLine.material = new Material(Shader.Find("Sprites/Default"));
             tmp.SetActive(false);
         }
+
 
         // Update is called once per frame
         void Update()
@@ -28,49 +31,68 @@ namespace Neno.Scripts
                 // クリックしたスクリーン座標をrayに変換
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 // Rayの当たったオブジェクトの情報を格納する
-                RaycastHit hit = new RaycastHit();
-                if (Physics.Raycast(ray, out hit, distance,1 << 8))
-                {
-                    enemyList.Add(hit.collider.gameObject);
-                    CreateEnemyCombineLine();
-                }
+                CombineRequest(ray);
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                ExplodeEnemy();
+                ExplodeRequest();
             }
 
             DrawEnemyCombineLine();
             DrawEnemy2Coursor();
 
         }
+        void CombineRequest(Ray ray)
+        {
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit, distance, 1 << 8))
+            {
+                IEnemy enemy = hit.collider.GetComponent<IEnemy>();
+                if (enemy != null && !enemy.Combined)
+                {
+                    enemy.Combined = true;
+                    enemyList.Add(hit.collider.gameObject);
+                    CreateEnemyCombineLine();
+                }
+            }
+        }
+
+        void ExplodeRequest()
+        {
+            explosionFlag = true;
+            GameObject expLinker = new GameObject();
+            Exploder exploder = expLinker.AddComponent<Exploder>();
+            exploder.Explode(this.enemyList, this.lineList);
+            this.enemyList = new List<GameObject>();
+            this.lineList = new List<GameObject>();
+            this.enemy2CoursorLine.gameObject.SetActive(false);
+            explosionFlag = false;
+        }
 
         void DrawEnemy2Coursor()
         {
+            if (explosionFlag)
+            {
+                return;
+            }
+
             if (enemyList != null)
             {
                 if (enemyList.Count >= 1)
                 {
-                    this.enemy2coursorLine.gameObject.SetActive(true);
+                    this.enemy2CoursorLine.gameObject.SetActive(true);
                     Vector3 enemyPos = this.enemyList[enemyList.Count - 1].transform.position;
                     Vector3 playerPos = gameObject.transform.position;
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     float player2EnemyDistance = (enemyPos - playerPos).magnitude;
-                    Debug.Log(player2EnemyDistance);
-                    enemy2coursorLine.positionCount = 2;
-                    enemy2coursorLine.startWidth = 0.1f;
-                    enemy2coursorLine.endWidth = 0.1f;
-                    enemy2coursorLine.startColor = Color.blue;
-                    enemy2coursorLine.endColor = Color.cyan;
-                    enemy2coursorLine.SetPosition(0, enemyPos);
-                    enemy2coursorLine.SetPosition(1, ray.direction*player2EnemyDistance + ray.origin);
+                    DrawLine(enemy2CoursorLine, enemyPos, ray.direction * player2EnemyDistance + ray.origin);
                 }
             }
         }
 
-        void ExplodeEnemy()
+        void RemoveEnemyMoment()
         {
             if (enemyList != null)
             {
@@ -87,7 +109,7 @@ namespace Neno.Scripts
                     Destroy(lineObj);
                 }
             }
-            enemy2coursorLine.gameObject.SetActive(false);
+            enemy2CoursorLine.gameObject.SetActive(false);
 
             if (enemyList != null) enemyList.Clear();
             if (lineList != null) lineList.Clear();
@@ -101,16 +123,15 @@ namespace Neno.Scripts
             {
                 for (int i = 0; i < lineList.Count; i++)
                 {
+                    if (enemyList.Count <= i + 1)
+                    {
+                        return;
+                    }
+
                     Vector3 startVec = enemyList[i].transform.position;
                     Vector3 endVec = enemyList[i + 1].transform.position;
                     LineRenderer lineRenderer = lineList[i].GetComponent<LineRenderer>();
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
-                    lineRenderer.startColor = Color.blue;
-                    lineRenderer.endColor = Color.cyan;
-                    lineRenderer.SetPosition(0, startVec);
-                    lineRenderer.SetPosition(1, endVec);
+                    DrawLine(lineRenderer,startVec, endVec);
                 }
             }
         }
@@ -124,18 +145,25 @@ namespace Neno.Scripts
                 {
                     GameObject line = new GameObject("Line");
                     LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
+                    lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+
                     lineList.Add(line);
                     Vector3 startVec = enemyList[enemyList.Count - 2].transform.position;
                     Vector3 endVec = enemyList[enemyList.Count - 1].transform.position;
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
-                    lineRenderer.startColor = Color.blue;
-                    lineRenderer.endColor = Color.cyan;
-                    lineRenderer.SetPosition(0, startVec);
-                    lineRenderer.SetPosition(1, endVec);
+                    DrawLine(lineRenderer, startVec, endVec);
                 }
             }
+        }
+
+        void DrawLine(LineRenderer lineRenderer, Vector3 start, Vector3 end)
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.startWidth = 0.1f;
+            lineRenderer.endWidth = 0.1f;
+            lineRenderer.startColor = Color.blue;
+            lineRenderer.endColor = Color.cyan;
+            lineRenderer.SetPosition(0, start);
+            lineRenderer.SetPosition(1, end);
         }
     }
 }
