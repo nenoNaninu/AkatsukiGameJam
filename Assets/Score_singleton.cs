@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Score_singleton : MonoBehaviour {
 
+
     public Text ScoreText;
     private static Score_singleton Score;
     private int num = 0;
