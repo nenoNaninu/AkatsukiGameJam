@@ -90,6 +90,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public void Explode()
     {
+        EnemyManager.CurrentEnemyNum--;
         Pop();
     }
 }
