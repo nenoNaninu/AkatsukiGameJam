@@ -687,7 +687,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
   cloudProjectId: f7751d01-1ba5-4e7f-95a2-5b6f73dfd219
-  projectName: 
+  projectName: AkatsukiGameJam
   organizationId: nenonaninu
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

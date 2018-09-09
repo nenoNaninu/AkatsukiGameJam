@@ -146,6 +146,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &8390913
 MeshRenderer:
@@ -312,6 +313,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!1001 &568560044
 Prefab:
@@ -511,6 +513,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &889110394
 MeshRenderer:
@@ -611,6 +614,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &1125031744
 MeshRenderer:
@@ -777,6 +781,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!1 &1582620655
 GameObject:
@@ -942,6 +947,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!1 &1875124614
 GameObject:
@@ -976,6 +982,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &1875124616
 MeshRenderer:
@@ -1043,6 +1050,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1937763069
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119965689344152, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114485941640906720, guid: 878107e0093371c459b02a56dd69a4e1,
+        type: 2}
+      propertyPath: anchor
+      value: 
+      objectReference: {fileID: 1937763070}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 878107e0093371c459b02a56dd69a4e1, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1937763070 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4156605446840428, guid: 878107e0093371c459b02a56dd69a4e1,
+    type: 2}
+  m_PrefabInternal: {fileID: 1937763069}
 --- !u!1 &2004040488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,4 +1201,5 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}

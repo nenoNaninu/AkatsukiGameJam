@@ -11,6 +11,7 @@ namespace Neno.Scripts
         List<GameObject> lineList = new List<GameObject>();
         [SerializeField] private float distance = 100f;
         private LineRenderer enemy2CoursorLine;
+        [SerializeField] private Transform oculusgoController;
 
         private bool explosionFlag = false;
 
@@ -26,7 +27,8 @@ namespace Neno.Scripts
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            
+            if (Input.GetMouseButtonDown(0) || OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad))
             {
                 // クリックしたスクリーン座標をrayに変換
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,7 +36,7 @@ namespace Neno.Scripts
                 CombineRequest(ray);
             }
 
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
                 ExplodeRequest();
             }
