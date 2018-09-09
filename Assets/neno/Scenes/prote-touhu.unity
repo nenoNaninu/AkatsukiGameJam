@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2069233, g: 0.13789201, b: 0.21266049, a: 1}
+  m_IndirectSpecularColor: {r: 0.20705631, g: 0.13838726, b: 0.21293584, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &8390913
 MeshRenderer:
@@ -312,6 +313,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!1001 &568560044
 Prefab:
@@ -351,6 +353,11 @@ Prefab:
     - target: {fileID: 4834308617727280, guid: d8ccb27937a4abb418d160c113efb3c5, type: 2}
       propertyPath: m_RootOrder
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114442100211720298, guid: d8ccb27937a4abb418d160c113efb3c5,
+        type: 2}
+      propertyPath: interval
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8ccb27937a4abb418d160c113efb3c5, type: 2}
@@ -511,6 +518,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &889110394
 MeshRenderer:
@@ -611,6 +619,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &1125031744
 MeshRenderer:
@@ -777,6 +786,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!1 &1582620655
 GameObject:
@@ -942,6 +952,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!1 &1875124614
 GameObject:
@@ -976,6 +987,7 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}
 --- !u!23 &1875124616
 MeshRenderer:
@@ -1142,4 +1154,5 @@ MonoBehaviour:
   type: 4
   popParticlePrefab: {fileID: 1532576762487402, guid: 1ad531cd2e17945efb859f5fd414003c,
     type: 2}
+  selectedMaker: {fileID: 0}
   selectedVoice: {fileID: 0}

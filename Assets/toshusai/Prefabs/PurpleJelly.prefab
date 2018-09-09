@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 114089667752575544}
   - component: {fileID: 65566904838274900}
-  - component: {fileID: 54724079476176598}
+  - component: {fileID: 54924810516060196}
   m_Layer: 8
   m_Name: PurpleJelly
   m_TagString: Untagged
@@ -176,6 +176,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1794194921446738}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54924810516060196
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65566904838274900
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -183,7 +198,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.86552066, y: 0.9640809, z: 0.8319661}

@@ -18,5 +18,7 @@ namespace Neno.Scripts
 
         //繋がった時の処理
         void OnLink();
+
+        void OnUnLink();
     }
 }
