@@ -27,7 +27,10 @@ public class Enemy : MonoBehaviour, IEnemy
     }
 
     [SerializeField]
-    public GameObject popParticlePrefab;
+    private GameObject popParticlePrefab;
+
+    [SerializeField]
+    private GameObject selectedMaker;
 
     [SerializeField]
     private AudioSource selectedVoice;
@@ -45,6 +48,7 @@ public class Enemy : MonoBehaviour, IEnemy
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Accelerating = false;
         transform.localScale = new Vector3(2, 2, 2);
+        selectedMaker.SetActive(false);
     }
 
     void Update()
@@ -68,19 +72,22 @@ public class Enemy : MonoBehaviour, IEnemy
     // 繋がったとき
     public void OnLink()
     {
-        transform.DOScale(1.2f, 0.2f);
+        transform.DOScale(transform.localScale.x * 1.2f, 0.2f);
+        selectedMaker.SetActive(true);
     }
 
     // 繋がりがなくなったとき
     public void OnUnLink()
     {
         transform.DOScale(1f, 0.2f);
+        selectedMaker.SetActive(false);
     }
 
     // 爆発する
     public void Pop()
     {
-        transform.DOScale(2f, 0.1f).OnComplete(() =>
+        selectedMaker.SetActive(false);
+        transform.DOScale(transform.localScale.x * 2f, 0.1f).OnComplete(() =>
         {
             GameObject particle = Instantiate(popParticlePrefab);
             particle.transform.localPosition = transform.position;
